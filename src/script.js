@@ -7,7 +7,6 @@ document.querySelector(".search").addEventListener("submit", async (e) => {
 
   // Reseta os valores antes da busca
   document.querySelector(".name").textContent = "Ninja";
-  document.querySelector("#ninja-img").setAttribute("src", "");
   document.querySelector(".age").textContent = "?";
   document.querySelector(".sex").textContent = "?";
   document.querySelector(".clan").textContent = "?";

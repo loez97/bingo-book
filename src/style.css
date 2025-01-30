@@ -65,10 +65,11 @@ body {
 .photo img {
     width: 100%;
     max-width: 300px;
-    height: auto;
+    height: 300px;
     border-radius: 10px;
-    border: 3px solid white;
+    border: 3px solid #fff;
     margin-top: 10px;
+    object-fit: cover;
 }
 
 .info {
