@@ -1,15 +1,25 @@
-document.querySelector(".search").addEventListener("submit", async (e) => {
+const form = document.querySelector(".search");
+const input = document.querySelector("#input");
+const nameEl = document.querySelector(".name");
+const ageEl = document.querySelector(".age");
+const sexEl = document.querySelector(".sex");
+const clanEl = document.querySelector(".clan");
+const imgEl = document.querySelector("#ninja-img");
+
+// Dicionário de Tradução
+const translations = {
+  Male: "Masculino",
+  Female: "Feminino",
+  Unknown: "Desconhecido",
+};
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const input = document.querySelector("#input");
   const ninjaName = input.value.trim();
-  if (!ninjaName) return alert("Insira um nome...");
+  if (!ninjaName) return showMessage("Digite um nome!");
 
-  // Reseta os valores antes da busca
-  document.querySelector(".name").textContent = "Ninja";
-  document.querySelector(".age").textContent = "?";
-  document.querySelector(".sex").textContent = "?";
-  document.querySelector(".clan").textContent = "?";
+  resetInfo();
 
   try {
     const response = await fetch(
@@ -18,22 +28,37 @@ document.querySelector(".search").addEventListener("submit", async (e) => {
     if (!response.ok) throw new Error("Erro ao buscar os dados");
 
     const data = await response.json();
-    if (!data.characters.length) throw new Error("Personagem não encontrado");
+    if (!data.characters.length) throw new Error("Ninja não encontrado!");
 
-    const character = data.characters[0];
-
-    document.querySelector(".name").textContent = character.name;
-    document
-      .querySelector("#ninja-img")
-      .setAttribute("src", character.images.at(-1) || "");
-    document.querySelector(".age").textContent =
-      character.personal.age["Part II"] ??
-      character.personal.age["Part I"] ??
-      "?";
-    document.querySelector(".sex").textContent = character.personal.sex ?? "?";
-    document.querySelector(".clan").textContent =
-      character.personal.clan ?? "?";
+    updateUI(data.characters[0]);
   } catch (error) {
-    alert(error.message);
+    showMessage(error.message);
   }
 });
+
+function updateUI(character) {
+  nameEl.textContent = character.name;
+  imgEl.src = character.images.at(-1) || "./img/user.jpg";
+  ageEl.textContent =
+    character.personal.age?.["Part II"] ??
+    character.personal.age?.["Part I"] ??
+    "?";
+
+  // Tradução do gênero e clã
+  sexEl.textContent =
+    translations[character.personal.sex] || character.personal.sex || "?";
+  clanEl.textContent =
+    translations[character.personal.clan] ||
+    character.personal.clan ||
+    "Sem Clã";
+}
+
+function resetInfo() {
+  nameEl.textContent = "Ninja";
+  ageEl.textContent = sexEl.textContent = clanEl.textContent = "?";
+  imgEl.src = "./img/user.jpg";
+}
+
+function showMessage(message) {
+  alert(message);
+}
