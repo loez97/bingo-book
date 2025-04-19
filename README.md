@@ -1,5 +1,5 @@
 # Bingo Book
-Um projeto inspirado no universo de Naruto, onde você pode pesquisar e obter informações dos ninjas mais conhecidos diretamente da folha (ou de outras vilas 👀). Basta digitar o nome e ver a ficha ninja completa!
+Um projeto inspirado no universo de Naruto, onde você pode pesquisar e obter informações dos ninjas. Basta digitar o nome e ver a ficha ninja completa!
 
 ## Funcionalidades
 
